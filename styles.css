@@ -3,11 +3,13 @@
   --bg-card: #131313;
   --fg: #f5f5f5;
   --fg-dim: #a3a3a3;
-  --fg-muted: #525252;
+  --fg-muted: #6b7280;
   --accent: #ff6b35;
   --accent-dim: #cc5429;
   --border: #262626;
+  --border-soft: #1f1f1f;
   --code-bg: #1a1a1a;
+  --success: #10b981;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -132,7 +134,7 @@ pre {
   font-size: 13px;
   line-height: 1.5;
   color: var(--fg);
-  margin: 16px 0;
+  margin: 16px 0 0;
 }
 code {
   font-family: ui-monospace, SFMono-Regular, monospace;
@@ -149,7 +151,7 @@ footer {
   margin-top: 96px;
   padding: 32px 24px;
   text-align: center;
-  color: var(--fg-muted);
+  color: var(--fg-dim);
   font-size: 13px;
 }
 footer a { color: var(--fg-dim); }
@@ -162,4 +164,58 @@ footer a { color: var(--fg-dim); }
   margin: 16px 0;
 }
 .prompt-block h3 { margin-top: 0; }
-.prompt-block .prompt-meta { font-size: 13px; color: var(--fg-muted); margin-bottom: 12px; }
+.prompt-block .prompt-meta {
+  font-size: 13px;
+  color: var(--fg-dim);
+  margin-bottom: 12px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.code-wrap {
+  position: relative;
+  margin-top: 12px;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  transition: color 120ms, border-color 120ms;
+  z-index: 1;
+}
+.copy-btn:hover {
+  color: var(--fg);
+  border-color: var(--fg-muted);
+}
+.copy-btn.copied {
+  color: var(--success);
+  border-color: var(--success);
+}
+.code-wrap pre { margin-top: 0; }
+
+.roi-callout {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-left-width: 3px;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: var(--fg);
+}
+.roi-callout strong { color: var(--accent); }
+
+@media (max-width: 600px) {
+  h1 { font-size: 32px; }
+  .container { padding: 40px 16px 64px; }
+  nav { padding: 16px; }
+  nav ul { gap: 16px; }
+}

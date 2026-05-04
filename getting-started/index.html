@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get started — Factlet Protocol</title>
-  <meta name="description" content="Try the Factlet Protocol in any LLM in 5 minutes. No install required.">
+  <meta name="description" content="Try the Factlet Protocol in any LLM in 5 minutes. Four copy-paste prompts. No install required.">
   <link rel="stylesheet" href="/styles.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
@@ -23,13 +23,19 @@
 
     <h1>Try the <span class="accent">protocol</span> in any LLM.</h1>
 
-    <p class="lede">Three copy-paste prompts that work in Claude, GPT, Gemini, or any chat interface. Validates the entire protocol concept before installing anything.</p>
+    <p class="lede">Four copy-paste prompts that work in Claude, GPT, Gemini, or any chat interface. Build a Factbook for your project, use it for grounded answers, audit your coverage, and measure the ROI yourself.</p>
+
+    <div class="roi-callout">
+      <strong>What you'll measure in Prompt 4</strong>: the same query answered twice — once with the model's training data only, once grounded by your Factbook — with a side-by-side comparison of tokens consumed, quality, risk of shipping, and follow-up turns required.
+    </div>
 
     <div class="prompt-block">
       <h3>Prompt 1 — Build a starter Factbook for your project</h3>
       <p class="prompt-meta">~3 minutes · works in any chat LLM</p>
       <p>Tells the model to ask you 5 grounding questions and return a starter YAML Factbook covering your team's decisions, conventions, and anti-patterns.</p>
-      <pre><code>You are helping me build a Factbook — a YAML file capturing the
+      <div class="code-wrap">
+        <button class="copy-btn" type="button" aria-label="Copy prompt 1">Copy</button>
+<pre><code>You are helping me build a Factbook — a YAML file capturing the
 private truths about my project that an AI should know before it
 makes recommendations. Read the Factlet Protocol v0.1 spec at
 factlet.ai/protocol so you understand the format.
@@ -43,13 +49,16 @@ Then ask me 5 grounding questions about my project, one at a time:
 
 After my answers, return a starter Factbook YAML with 5-8 factlets,
 each with id (f001+), statement, confidence (0.0-1.0), sources, tags.</code></pre>
+      </div>
     </div>
 
     <div class="prompt-block">
       <h3>Prompt 2 — Use the Factbook to answer, with citations</h3>
       <p class="prompt-meta">~1 minute · paste your YAML + ask anything</p>
       <p>Gives the model your Factbook as grounding. The model answers using factlets and explicitly says when the question is outside the Factbook's coverage.</p>
-      <pre><code>Below is my project's Factbook. When I ask a question, you must:
+      <div class="code-wrap">
+        <button class="copy-btn" type="button" aria-label="Copy prompt 2">Copy</button>
+<pre><code>Below is my project's Factbook. When I ask a question, you must:
 1. Identify which factlets (by id) apply
 2. Answer using the factlets, citing each fact id you used
 3. If no factlets apply, say "Outside Factbook coverage — answering
@@ -59,13 +68,16 @@ each with id (f001+), statement, confidence (0.0-1.0), sources, tags.</code></pr
 [paste your Factbook YAML here]
 
 My question: [type your question]</code></pre>
+      </div>
     </div>
 
     <div class="prompt-block">
       <h3>Prompt 3 — Score FactSignal coverage for a query</h3>
       <p class="prompt-meta">~30 seconds · audit your factbook gaps</p>
       <p>Returns a 0-5 bars score for how well your Factbook covers a query, plus what's missing if coverage is thin.</p>
-      <pre><code>You are a FactSignal scorer per the Factlet Protocol. Given a
+      <div class="code-wrap">
+        <button class="copy-btn" type="button" aria-label="Copy prompt 3">Copy</button>
+<pre><code>You are a FactSignal scorer per the Factlet Protocol. Given a
 Factbook (YAML) and a query, return:
 
 1. FactSignal: integer 0 to 5
@@ -84,21 +96,104 @@ Factbook (YAML) and a query, return:
 [paste your Factbook YAML here]
 
 Query: [type your query]</code></pre>
+      </div>
     </div>
 
-    <h2>What you just validated</h2>
-    <p>If those prompts felt useful, you've validated the entire Factlet Protocol value proposition without installing anything: a structured corpus of your team's truth, used to ground any LLM's answers, with a coverage signal that tells you when grounding runs out.</p>
+    <div class="prompt-block">
+      <h3>Prompt 4 — Measure your ROI: with vs without Factbook</h3>
+      <p class="prompt-meta">~2 minutes · honest A/B comparison · the proof</p>
+      <p>Asks the model to answer the same query twice — once pretending it has never seen the Factbook (training data only), once grounded by the Factbook. Returns a side-by-side comparison of quality, token cost, risk of shipping, and follow-up turns required. Tells you honestly if the Factbook didn't help.</p>
+      <div class="code-wrap">
+        <button class="copy-btn" type="button" aria-label="Copy prompt 4">Copy</button>
+<pre><code>You are running an A/B test to measure ROI of a Factbook against a
+baseline (no Factbook). The user wants honest numbers, not flattery.
+
+Run BOTH rounds before showing results.
+
+[paste your Factbook YAML here]
+
+Query I want to test: [type your query]
+
+ROUND 1 — BASELINE (training data only)
+Pretend you have never seen the Factbook above. Answer the query
+using only public knowledge. Then self-assess:
+- Tokens: estimate input + output token count
+- Quality (1-10): does this answer contradict any factlet in the
+  Factbook? Each contradiction = -2 points.
+- Risk of shipping: would this answer cause a bug, security issue,
+  or customer-facing problem given the team's actual context?
+  (low / medium / high)
+- Follow-up turns: if a reviewer would need to correct you, count
+  each correction round as +1 turn.
+
+ROUND 2 — GROUNDED (with Factbook)
+Now answer the same query, citing specific factlet ids. If a
+factlet covers part of the answer, defer to it over training data.
+If no factlet applies, say so explicitly before answering. Then
+self-assess the same four metrics.
+
+ROI TABLE (output as markdown)
+| Metric                  | Baseline | Grounded | Delta |
+|-------------------------|----------|----------|-------|
+| Tokens (input + output) |          |          |       |
+| Quality (1-10)          |          |          |       |
+| Risk of shipping        |          |          |       |
+| Follow-up turns         |          |          |       |
+
+ROI VERDICT (one paragraph, brutally honest)
+State plainly:
+- Did the Factbook reduce follow-up turns? By how much?
+- Did it reduce shipping risk? Name the specific factlet that
+  prevented an error.
+- Did it cost more tokens? (Yes — Factbook context adds tokens.
+  If the savings don't justify the cost, say so.)
+- If the Factbook didn't help (no relevant factlets, query outside
+  coverage), say: "FactSignal too low for this query — Factbook
+  adds tokens without reducing turns. Add factlets covering [topic]
+  to fix."
+
+Do not flatter the Grounded answer. If Baseline was correct without
+the Factbook, say the Factbook was redundant for this query.</code></pre>
+      </div>
+    </div>
+
+    <h2>What you just measured</h2>
+    <p>If those four prompts felt useful, you've validated the Factlet Protocol value proposition without installing anything: a structured corpus of your team's truth, used to ground any LLM, with honest numbers showing where it pays off (turn reduction, risk reduction) and where it doesn't (queries outside coverage).</p>
+
+    <p>The most valuable answer Prompt 4 can give you is "the Factbook didn't help here." That tells you exactly which domains need more factlets to close the dead zone.</p>
 
     <h2>Next steps</h2>
     <ul class="primitives">
-      <li><strong>Use a maintained implementation</strong><p>Once the value is clear, <a href="https://kernora.ai">Kernora's Nora</a> automates everything the prompts do manually — captures factlets from your sessions, injects them into IDEs, scores FactSignal in real time.</p></li>
+      <li><strong>Use a maintained implementation</strong><p>Once the value is clear, <a href="https://kernora.ai">Kernora's Nora</a> automates everything the prompts do manually — captures factlets from your sessions, injects them into IDEs, scores FactSignal in real time, and tracks ROI continuously.</p></li>
       <li><strong>Build your own</strong><p>The reference SDK at <a href="https://github.com/factlet-ai/reference-sdk">github.com/factlet-ai/reference-sdk</a> is intentionally minimal — most tools that already do retrieval can add Factbook support in a day.</p></li>
       <li><strong>Contribute an example</strong><p>Add a sanitized example Factbook to the registry at <a href="https://github.com/factlet-ai/registry">github.com/factlet-ai/registry</a> so others can learn from your domain.</p></li>
     </ul>
   </main>
 
   <footer>
-    <p>Factlet Protocol · MIT licensed · <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+    <p>Factlet Protocol &middot; MIT licensed &middot; <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
   </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        var wrap = btn.closest('.code-wrap');
+        var code = wrap.querySelector('code');
+        var label = btn.textContent;
+        try {
+          await navigator.clipboard.writeText(code.textContent);
+          btn.textContent = 'Copied';
+          btn.classList.add('copied');
+          setTimeout(function () {
+            btn.textContent = label;
+            btn.classList.remove('copied');
+          }, 1800);
+        } catch (e) {
+          btn.textContent = 'Failed';
+          setTimeout(function () { btn.textContent = label; }, 1800);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

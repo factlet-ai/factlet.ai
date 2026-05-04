@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects
+# Pretty URLs without .html extension
+/protocol /protocol.html 200
+/getting-started /getting-started.html 200

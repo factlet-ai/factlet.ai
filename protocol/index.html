@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The protocol — Factlet Protocol</title>
+  <meta name="description" content="The v0.1 specification of the Factlet Protocol.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/">factlet<span class="accent">.</span>ai</a>
+    <ul>
+      <li><a href="/protocol">Spec</a></li>
+      <li><a href="/getting-started">Get started</a></li>
+      <li><a href="https://github.com/factlet-ai">GitHub</a></li>
+    </ul>
+  </nav>
 
+  <main class="container">
+    <span class="badge"><span class="dot">●</span> v0.1 draft</span>
+
+    <h1>The <span class="accent">specification</span>.</h1>
+
+    <p class="lede">An open, minimum specification for portable AI grounding. Five primitives. Each does one job.</p>
+
+    <h2>The minimum specification</h2>
+
+    <h3>1. Factlet record format</h3>
+    <p>YAML canonical. Required fields: <code>id</code>, <code>statement</code>, <code>confidence</code> (0.0-1.0), <code>sources</code> (file:line, commit, doc). Optional: <code>supersedes</code>, <code>merged_into</code>, <code>archived</code>, <code>archived_reason</code>, <code>retired_at</code>, <code>tags</code>, <code>scope_level</code>. Renders per-vendor: structured XML for Claude, markdown for GPT, <code>systemInstruction</code> for Gemini. The renderer is a separate concern from the canonical store.</p>
+
+    <h3>2. FactMap structural index</h3>
+    <p>A spatial organization of factlets — per directory, per module, per domain, per customer, per feature. Implementations choose the structure that fits their domain. The contract is: given a query, return the relevant subset of factlets and the structural region they cover.</p>
+
+    <h3>3. Factbook container</h3>
+    <p>A packaged YAML container with <code>schema_version</code>, <code>last_updated</code>, and the <code>content</code> array of factlets. Portable across implementations. Versioned in git so the team owns the artifact and can roll back.</p>
+
+    <h3>4. FactSignal scoring function</h3>
+    <p>A function with signature <code>factsignal(query, factmap) → bars</code> (integer 0 to 5). Implementations may use embedding-based scoring, keyword scoring, graph scoring, or LLM scoring. The contract is the bars output, not the algorithm. Bars represent: 5 = dense coverage, 4 = good, 3 = mixed, 2 = sparse, 1 = thin, 0 = dead zone.</p>
+
+    <h3>5. Low-FactSignal warning hook</h3>
+    <p>A required runtime callback that fires when <code>factsignal(query) &lt; threshold</code> (default 2). The hook receives the query, the FactSignal score, and the retrieved factlets. The consuming agent decides what to do: warn the user, escalate, refuse to answer, log the event. The protocol mandates the signal; the policy is the agent's.</p>
+
+    <h2>Sample Factbook</h2>
+    <pre><code>schema_version: v1.0
+content:
+  - id: f001
+    statement: "We use Stripe webhooks (not polling) for payment status updates."
+    confidence: 0.95
+    sources: ["docs/payments-arch.md:42", "commit:abc123"]
+    tags: [payments, architecture]
+
+  - id: f002
+    statement: "Refunds older than 90 days require manual ops approval, never auto-processed."
+    confidence: 1.0
+    sources: ["docs/refund-policy.md:8"]
+    tags: [payments, ops, compliance]</code></pre>
+
+    <h2>Full v0.1 spec</h2>
+    <p><strong>Coming soon.</strong> The full specification with edge cases, schema details, and interop rules is being finalized. To track progress or propose an RFC, see <a href="https://github.com/factlet-ai/spec">github.com/factlet-ai/spec</a> and its <a href="https://github.com/factlet-ai/spec/discussions">Discussions</a>.</p>
+
+    <h2>Reference implementations</h2>
+    <ul class="primitives">
+      <li><strong><a href="https://github.com/factlet-ai/reference-sdk">reference-sdk</a></strong><p>Python + TypeScript reference implementations. Minimal, dependency-light, MIT-licensed.</p></li>
+      <li><strong><a href="https://github.com/factlet-ai/registry">registry</a></strong><p>Community-contributed example factbooks across domains.</p></li>
+      <li><strong><a href="https://kernora.ai">Kernora's Nora</a></strong><p>Production-grade implementation with desktop + IDE integration.</p></li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>Factlet Protocol · MIT licensed · <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+  </footer>
+</body>
+</html>

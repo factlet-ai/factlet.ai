@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factlet Protocol — open-source ground truth for AI</title>
+  <meta name="description" content="An open, vendor-neutral specification for grounding any AI in your team's private truth — with a built-in signal for when that grounding runs out.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/">factlet<span class="accent">.</span>ai</a>
+    <ul>
+      <li><a href="/protocol">Spec</a></li>
+      <li><a href="/getting-started">Get started</a></li>
+      <li><a href="https://github.com/factlet-ai">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <span class="badge"><span class="dot">●</span> v0.1 draft · open RFC</span>
+
+    <h1>Open-source ground truth<br>for <span class="accent">AI</span>.</h1>
+
+    <p class="lede">A portable, vendor-neutral way to ground any large language model in your team's private truth — with a built-in signal for when that grounding runs out.</p>
+
+    <div class="cta-row">
+      <a href="/getting-started" class="cta primary">Try in any LLM in 5 minutes</a>
+      <a href="/protocol" class="cta">Read the spec</a>
+      <a href="https://github.com/factlet-ai" class="cta">View on GitHub</a>
+    </div>
+
+    <h2>Five primitives</h2>
+    <p>Each does one job. Together they form the protocol.</p>
+    <ul class="primitives">
+      <li><strong>Factlet</strong><p>One atomic truth about your private information — a decision, a constraint, an anti-pattern.</p></li>
+      <li><strong>FactMap</strong><p>The structured collection of factlets covering one body of work — your codebase, your product, your customer base.</p></li>
+      <li><strong>Factbook</strong><p>A packaged FactMap, versioned in git, portable across implementations. The artifact your team owns.</p></li>
+      <li><strong>FactSignal</strong><p>How strong the grounding is at any query, measured in bars (0-5). The same vocabulary you've used since your first phone.</p></li>
+      <li><strong>Low-FactSignal warning</strong><p>A runtime callback that fires when a model is about to answer in a zone with no relevant factlets. Before the answer ships.</p></li>
+    </ul>
+
+    <h2>Why a protocol, not a product</h2>
+    <p>Anthropic's Memory belongs to Claude. OpenAI's Memory belongs to GPT. Google's Project Astra belongs to Gemini. Each frontier lab is shipping its own per-vendor private-knowledge layer. Teams who want their factlets in multiple tools — today's reality — get fragmented across incompatible memory stores.</p>
+    <p>The Factlet Protocol is the open layer underneath. Same factlets. Same FactMap. Same FactSignal. Whichever model you ask. Whichever IDE you use today and switch from tomorrow.</p>
+
+    <h2>Status</h2>
+    <p><strong>v0.1 draft.</strong> The full specification, reference SDK (Python + TypeScript), and example registry are being prepared. The blog post launch and complete artifact set ship together. Star <a href="https://github.com/factlet-ai/spec">the spec repo</a> to follow along, or open a Discussion to propose an RFC.</p>
+
+    <h2>Implementation</h2>
+    <p><a href="https://kernora.ai">Kernora's Nora</a> is the maintained reference implementation of the protocol. The protocol exists with or without any one implementation — Cursor, Claude Code, Continue.dev, Aider, Goose, OpenCode could all read the same factbooks.</p>
+  </main>
+
+  <footer>
+    <p>Factlet Protocol · MIT licensed · <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+  </footer>
+</body>
+</html>

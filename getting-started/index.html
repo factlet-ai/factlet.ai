@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get started — Factlet Protocol</title>
+  <meta name="description" content="Try the Factlet Protocol in any LLM in 5 minutes. No install required.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/">factlet<span class="accent">.</span>ai</a>
+    <ul>
+      <li><a href="/protocol">Spec</a></li>
+      <li><a href="/getting-started">Get started</a></li>
+      <li><a href="https://github.com/factlet-ai">GitHub</a></li>
+    </ul>
+  </nav>
 
+  <main class="container">
+    <span class="badge"><span class="dot">●</span> 5 minutes · no install</span>
+
+    <h1>Try the <span class="accent">protocol</span> in any LLM.</h1>
+
+    <p class="lede">Three copy-paste prompts that work in Claude, GPT, Gemini, or any chat interface. Validates the entire protocol concept before installing anything.</p>
+
+    <div class="prompt-block">
+      <h3>Prompt 1 — Build a starter Factbook for your project</h3>
+      <p class="prompt-meta">~3 minutes · works in any chat LLM</p>
+      <p>Tells the model to ask you 5 grounding questions and return a starter YAML Factbook covering your team's decisions, conventions, and anti-patterns.</p>
+      <pre><code>You are helping me build a Factbook — a YAML file capturing the
+private truths about my project that an AI should know before it
+makes recommendations. Read the Factlet Protocol v0.1 spec at
+factlet.ai/protocol so you understand the format.
+
+Then ask me 5 grounding questions about my project, one at a time:
+1. What's the project and what does it do?
+2. What language/framework/stack?
+3. What's one decision your team made that an AI would get wrong?
+4. What's an anti-pattern in your codebase?
+5. What's a hidden constraint (compliance, performance, customer)?
+
+After my answers, return a starter Factbook YAML with 5-8 factlets,
+each with id (f001+), statement, confidence (0.0-1.0), sources, tags.</code></pre>
+    </div>
+
+    <div class="prompt-block">
+      <h3>Prompt 2 — Use the Factbook to answer, with citations</h3>
+      <p class="prompt-meta">~1 minute · paste your YAML + ask anything</p>
+      <p>Gives the model your Factbook as grounding. The model answers using factlets and explicitly says when the question is outside the Factbook's coverage.</p>
+      <pre><code>Below is my project's Factbook. When I ask a question, you must:
+1. Identify which factlets (by id) apply
+2. Answer using the factlets, citing each fact id you used
+3. If no factlets apply, say "Outside Factbook coverage — answering
+   from training data only" before answering
+4. Never contradict a factlet, even if your training data disagrees
+
+[paste your Factbook YAML here]
+
+My question: [type your question]</code></pre>
+    </div>
+
+    <div class="prompt-block">
+      <h3>Prompt 3 — Score FactSignal coverage for a query</h3>
+      <p class="prompt-meta">~30 seconds · audit your factbook gaps</p>
+      <p>Returns a 0-5 bars score for how well your Factbook covers a query, plus what's missing if coverage is thin.</p>
+      <pre><code>You are a FactSignal scorer per the Factlet Protocol. Given a
+Factbook (YAML) and a query, return:
+
+1. FactSignal: integer 0 to 5
+   - 5 = dense coverage, multiple relevant factlets
+   - 4 = good, one strong direct factlet + adjacent
+   - 3 = mixed, partial coverage
+   - 2 = sparse, one tangentially relevant factlet
+   - 1 = thin, only loosely related factlets
+   - 0 = dead zone, no relevant factlets
+
+2. Which factlet ids you found relevant (if any)
+
+3. If FactSignal &lt; 3, list 2-3 factlets the team should add to
+   close the gap
+
+[paste your Factbook YAML here]
+
+Query: [type your query]</code></pre>
+    </div>
+
+    <h2>What you just validated</h2>
+    <p>If those prompts felt useful, you've validated the entire Factlet Protocol value proposition without installing anything: a structured corpus of your team's truth, used to ground any LLM's answers, with a coverage signal that tells you when grounding runs out.</p>
+
+    <h2>Next steps</h2>
+    <ul class="primitives">
+      <li><strong>Use a maintained implementation</strong><p>Once the value is clear, <a href="https://kernora.ai">Kernora's Nora</a> automates everything the prompts do manually — captures factlets from your sessions, injects them into IDEs, scores FactSignal in real time.</p></li>
+      <li><strong>Build your own</strong><p>The reference SDK at <a href="https://github.com/factlet-ai/reference-sdk">github.com/factlet-ai/reference-sdk</a> is intentionally minimal — most tools that already do retrieval can add Factbook support in a day.</p></li>
+      <li><strong>Contribute an example</strong><p>Add a sanitized example Factbook to the registry at <a href="https://github.com/factlet-ai/registry">github.com/factlet-ai/registry</a> so others can learn from your domain.</p></li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>Factlet Protocol · MIT licensed · <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+  </footer>
+</body>
+</html>

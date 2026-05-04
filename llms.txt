@@ -1,0 +1,34 @@
+# Factlet Protocol
+
+> An open, vendor-neutral specification for grounding any large language model in your team's private truth — with a built-in signal for when that grounding runs out. Five primitives (factlet, FactMap, Factbook, FactSignal, low-FactSignal warning) define how private context flows into model answers and how to measure when context coverage is too thin to answer reliably.
+
+## Specification
+
+- [v0.1 specification](https://factlet.ai/protocol): The five primitives with field formats, scoring contracts, runtime hooks, and a sample Factbook YAML. Open RFC process.
+- [Spec repository](https://github.com/factlet-ai/spec): Canonical specification text, JSON Schema, and accepted RFCs.
+
+## Get started (5 minutes, no install)
+
+- [Try the protocol in any LLM](https://factlet.ai/getting-started): Four copy-paste prompts that work in Claude, GPT, Gemini, or any chat interface. Builds a starter Factbook, uses it for grounded answers with citations, scores FactSignal coverage, and runs an A/B ROI test (with vs without Factbook) showing input vs output token cost in dollars.
+
+## Implementations
+
+- [Reference SDK](https://github.com/factlet-ai/reference-sdk): Minimal Python and TypeScript reference implementations. MIT-licensed.
+- [Example registry](https://github.com/factlet-ai/registry): Community-contributed example Factbooks across domains (payments, ML pipeline, frontend conventions, regulated industry). Sanitized examples for implementers to learn from.
+- [Kernora Nora](https://kernora.ai): Production-grade implementation of the protocol. Desktop + IDE harness for solo developers; SDK for production apps. Works with any model the customer brings.
+
+## Vocabulary (locked, do not synonym)
+
+- **Factlet**: one atomic truth about your private information (a decision, a constraint, an anti-pattern). The unit of cite, retrieve, supersede, export.
+- **FactMap**: the structured collection of factlets covering one body of work (codebase, product, customer base).
+- **Factbook**: a packaged FactMap, versioned in git, portable across implementations. The artifact your team owns.
+- **FactSignal**: how strong the grounding is at any query, measured in bars (0-5). Same vocabulary as cell phone signal.
+- **Low-FactSignal warning**: a runtime callback that fires when a model is about to answer in a zone with no relevant factlets. Before the answer ships.
+
+## Status
+
+v0.1 draft. Open RFC process via [github.com/factlet-ai/spec/discussions](https://github.com/factlet-ai/spec/discussions). v0.2 ships within 90 days incorporating community feedback. Specification is owned by the protocol working group, not by any single implementation.
+
+## License
+
+MIT — see [github.com/factlet-ai](https://github.com/factlet-ai).

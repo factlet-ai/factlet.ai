@@ -26,7 +26,7 @@
     <p class="lede">Four copy-paste prompts that work in Claude, GPT, Gemini, or any chat interface. Build a Factbook for your project, use it for grounded answers, audit your coverage, and measure the ROI yourself.</p>
 
     <div class="roi-callout">
-      <strong>What you'll measure in Prompt 4</strong>: the same query answered twice — once with the model's training data only, once grounded by your Factbook — with a side-by-side comparison of tokens consumed, quality, risk of shipping, and follow-up turns required.
+      <strong>What you'll measure in Prompt 4</strong>: the same query answered twice — once with the model's training data only, once grounded by your Factbook — with a side-by-side comparison that splits <em>input tokens</em> (cheap; what the Factbook adds) vs <em>output tokens</em> (3-5x more expensive; what wrong-answer turns burn). Includes dollar cost using current Claude / GPT / Gemini rates.
     </div>
 
     <div class="prompt-block">
@@ -108,6 +108,12 @@ Query: [type your query]</code></pre>
 <pre><code>You are running an A/B test to measure ROI of a Factbook against a
 baseline (no Factbook). The user wants honest numbers, not flattery.
 
+Important: output tokens are 3-5x more expensive than input tokens
+on every major model. Adding Factbook context costs cheap input
+tokens. Avoiding wrong-answer correction turns saves expensive
+output tokens AND the cost of resending context next turn. So
+separate input vs output in your accounting.
+
 Run BOTH rounds before showing results.
 
 [paste your Factbook YAML here]
@@ -117,40 +123,59 @@ Query I want to test: [type your query]
 ROUND 1 — BASELINE (training data only)
 Pretend you have never seen the Factbook above. Answer the query
 using only public knowledge. Then self-assess:
-- Tokens: estimate input + output token count
+- Input tokens: count of the query (and any reasoning context)
+- Output tokens: count of your answer
 - Quality (1-10): does this answer contradict any factlet in the
   Factbook? Each contradiction = -2 points.
 - Risk of shipping: would this answer cause a bug, security issue,
   or customer-facing problem given the team's actual context?
   (low / medium / high)
 - Follow-up turns: if a reviewer would need to correct you, count
-  each correction round as +1 turn.
+  each correction round as +1 turn (each turn ≈ ~300 input + ~500
+  output tokens of additional cost).
 
 ROUND 2 — GROUNDED (with Factbook)
 Now answer the same query, citing specific factlet ids. If a
 factlet covers part of the answer, defer to it over training data.
 If no factlet applies, say so explicitly before answering. Then
-self-assess the same four metrics.
+self-assess the same metrics.
 
 ROI TABLE (output as markdown)
-| Metric                  | Baseline | Grounded | Delta |
-|-------------------------|----------|----------|-------|
-| Tokens (input + output) |          |          |       |
-| Quality (1-10)          |          |          |       |
-| Risk of shipping        |          |          |       |
-| Follow-up turns         |          |          |       |
+| Metric              | Baseline | Grounded | Delta |
+|---------------------|----------|----------|-------|
+| Input tokens        |          |          |       |
+| Output tokens       |          |          |       |
+| Quality (1-10)      |          |          |       |
+| Risk of shipping    |          |          |       |
+| Follow-up turns     |          |          |       |
+
+DOLLAR COST
+Compute cost per single answer AND total session cost (multiply by
+1 + follow_up_turns). Use these per-1M-token rates as examples
+(actual rates may have shifted; verify with your provider):
+
+| Model                | Input  | Output |
+|----------------------|--------|--------|
+| Claude Sonnet 4.6    | $3.00  | $15.00 |
+| GPT-4.1              | $2.00  | $8.00  |
+| Gemini 2.0 Flash     | $0.10  | $0.40  |
+
+Show for the model the user is most likely on:
+- Single answer cost: Baseline $X / Grounded $Y
+- Full session cost (× turns): Baseline $A / Grounded $B
+- Net savings or extra cost: $A - $B = $Z
 
 ROI VERDICT (one paragraph, brutally honest)
-State plainly:
-- Did the Factbook reduce follow-up turns? By how much?
-- Did it reduce shipping risk? Name the specific factlet that
-  prevented an error.
-- Did it cost more tokens? (Yes — Factbook context adds tokens.
-  If the savings don't justify the cost, say so.)
+- Did the Factbook reduce follow-up turns? By how much in dollars?
+- Did it reduce shipping risk? Cite the specific factlet that
+  prevented the error.
+- Did the extra input tokens (Factbook context) cost more than the
+  saved output tokens? Almost never on these rate cards because
+  output is 3-5x pricier — but say so if your numbers say otherwise.
 - If the Factbook didn't help (no relevant factlets, query outside
   coverage), say: "FactSignal too low for this query — Factbook
-  adds tokens without reducing turns. Add factlets covering [topic]
-  to fix."
+  added input tokens without reducing output tokens or turns. Add
+  factlets covering [topic] to fix."
 
 Do not flatter the Grounded answer. If Baseline was correct without
 the Factbook, say the Factbook was redundant for this query.</code></pre>

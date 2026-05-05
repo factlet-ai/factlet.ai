@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Factlet Protocol</title>
+  <meta name="description" content="The Factlet Protocol is an open specification, governed by a working group, with Nora as the production reference implementation maintained by Kernora.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="About — Factlet Protocol">
+  <meta property="og:description" content="Open specification, working-group governed, with Nora as the production reference implementation maintained by Kernora.">
+  <meta property="og:image" content="https://factlet.ai/og-home.png">
+  <meta property="og:url" content="https://factlet.ai/about/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Factlet Protocol">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About — Factlet Protocol">
+  <meta name="twitter:description" content="Open spec, working-group governed, Nora as production reference implementation.">
+  <meta name="twitter:image" content="https://factlet.ai/og-home.png">
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/">factlet<span class="accent">.</span>ai</a>
+    <ul>
+      <li><a href="/protocol">Spec</a></li>
+      <li><a href="/getting-started">Get started</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="https://github.com/factlet-ai">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <span class="badge"><span class="dot">●</span> open spec · working-group governed</span>
+
+    <h1>About the <span class="accent">protocol</span>.</h1>
+
+    <p class="lede">The Factlet Protocol is an open specification, governed by a working group, with a reference implementation maintained by Kernora. This page explains who maintains what, how decisions are made, and how to get involved.</p>
+
+    <h2>Maintainers</h2>
+    <p>v0.1 of the specification was authored by <a href="https://www.linkedin.com/in/mihirchoudhary">Mihir Choudhary</a>, founder of <a href="https://kernora.ai">Kernora</a>. The reference Python SDK is maintained by Kernora as a community service. The spec itself is owned by the protocol working group; future versions reflect community RFCs, not vendor decisions.</p>
+
+    <h2>How decisions are made</h2>
+    <p>Substantive changes to the spec — new primitives, breaking schema changes, field renames — flow through the open RFC process at <a href="https://github.com/factlet-ai/spec/discussions">github.com/factlet-ai/spec/discussions</a>. Each accepted RFC includes the rationale, alternatives considered, and the migration path if breaking. Discussion threads stay open even after a decision lands; the audit trail is the spec's most durable artifact.</p>
+
+    <h2>Reference SDK</h2>
+    <p>Kernora maintains the canonical Python reference SDK at <a href="https://github.com/factlet-ai/reference-sdk">github.com/factlet-ai/reference-sdk</a>. The reference is what implementations test against; it stays intentionally minimal and dependency-light (~400 lines, 15 passing tests, only PyYAML required). TypeScript reference SDK is planned for v0.1.1 after Python stabilizes.</p>
+
+    <h2>About Nora — the production reference implementation</h2>
+    <p><a href="https://kernora.ai">Nora</a> is the production reference implementation of the Factlet Protocol, built and maintained by Kernora. It runs alongside your AI coding tools — captures every session, extracts architectural decisions, and feeds the resulting Factbook back into the next session.</p>
+    <p>Where the Python reference SDK is the smallest possible thing that demonstrates the protocol contract, Nora is the production version: embedding-based retrieval, a 19-tool MCP server, IDE extensions for Claude Code / Cursor / Kiro / VS Code, a macOS desktop app, real-time FactSignal scoring, and the low-FactSignal warning surfaced as an in-IDE banner.</p>
+    <p>Nora is open source and local-first. No cloud required. No API key required by default. Bring your own model — Claude, GPT, Gemini, or a local model on your machine.</p>
+    <ul class="primitives">
+      <li><strong>Source code</strong><p><a href="https://github.com/kernora-ai/nora">github.com/kernora-ai/nora</a></p></li>
+      <li><strong>Project home</strong><p><a href="https://kernora.ai">kernora.ai</a></p></li>
+      <li><strong>Other tools welcome</strong><p>Nora is one implementation among many that the protocol allows. Cursor, Claude Code, Continue.dev, Aider, Goose, OpenCode — any tool with retrieval can implement a reader in an afternoon and read the same Factbooks.</p></li>
+    </ul>
+
+    <h2>Get involved</h2>
+    <ul class="primitives">
+      <li><strong>Implement a reader</strong><p>If you build a tool that does retrieval — IDE plugin, internal copilot, agent framework — the SDK is ~400 lines and a reader is ~80 of them. <a href="https://github.com/factlet-ai/reference-sdk">github.com/factlet-ai/reference-sdk</a></p></li>
+      <li><strong>Open an RFC</strong><p>Push back on the spec via <a href="https://github.com/factlet-ai/spec/discussions">spec discussions</a>. v0.2 ships within 90 days. Field names, scoring algorithms, supersession semantics — every decision is up for revision until v1.0 locks.</p></li>
+      <li><strong>Contribute a Factbook</strong><p>Add a sanitized example to <a href="https://github.com/factlet-ai/registry">the registry</a>. Any real-world domain helps implementers calibrate. See the existing payments / frontend / ML pipeline examples to crib from.</p></li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Spec questions and RFCs: <a href="https://github.com/factlet-ai/spec/discussions">github.com/factlet-ai/spec/discussions</a>. Press, partnership, security disclosures, or anything else: <a href="mailto:hello@kernora.ai">hello@kernora.ai</a>.</p>
+  </main>
+
+  <footer>
+    <p>Factlet Protocol &middot; MIT licensed &middot; <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+  </footer>
+</body>
+</html>

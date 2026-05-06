@@ -24,6 +24,7 @@
     <ul>
       <li><a href="/protocol">Spec</a></li>
       <li><a href="/getting-started">Get started</a></li>
+      <li><a href="/evals">Evals</a></li>
       <li><a href="https://github.com/factlet-ai">GitHub</a></li>
     </ul>
   </nav>
@@ -54,6 +55,9 @@
     <h2>Why a protocol, not a product</h2>
     <p>Anthropic's Memory belongs to Claude. OpenAI's Memory belongs to GPT. Google's Project Astra belongs to Gemini. Each frontier lab is shipping its own per-vendor private-knowledge layer. Teams who want their factlets in multiple tools — today's reality — get fragmented across incompatible memory stores.</p>
     <p>The Factlet Protocol is the open layer underneath. Same factlets. Same FactMap. Same FactSignal. Whichever model you ask. Whichever IDE you use today and switch from tomorrow.</p>
+
+    <h2>Does it work?</h2>
+    <p>An open eval suite at <a href="https://github.com/factlet-ai/evals">github.com/factlet-ai/evals</a> measures the protocol's effect on model behavior. Pre-registered, MIT-licensed, raw data published. First scaffold run (N=6 hand-crafted developer tasks across Claude, GPT, Gemini): providing the model with a team-specific factbook reduced harmful shipping recommendations 4× and high-risk recommendations 20×. Same direction across all three vendors. The full writeup leads with the limits — N=6 + single-author + no RAG comparator yet — and the unfavorable finding (rendering format isn't the moat). <a href="/evals">Read the methodology and results.</a></p>
 
     <h2>Status</h2>
     <p><strong>v0.1 draft.</strong> The full specification, reference SDK (Python + TypeScript), and example registry are being prepared. The blog post launch and complete artifact set ship together. Star <a href="https://github.com/factlet-ai/spec">the spec repo</a> to follow along, or open a Discussion to propose an RFC.</p>

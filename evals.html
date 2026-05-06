@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evals — Factlet Protocol</title>
+  <meta name="description" content="Open eval suite for the Factlet Protocol. Pre-registered methodology, raw runs, and an N=6 scaffold result published with limits front-and-center.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="Evals — Factlet Protocol">
+  <meta property="og:description" content="Open eval suite for the Factlet Protocol. Pre-registered methodology, raw runs, full data.">
+  <meta property="og:url" content="https://factlet.ai/evals">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Factlet Protocol">
+</head>
+<body>
+  <nav>
+    <a class="brand" href="/">factlet<span class="accent">.</span>ai</a>
+    <ul>
+      <li><a href="/protocol">Spec</a></li>
+      <li><a href="/getting-started">Get started</a></li>
+      <li><a href="/evals">Evals</a></li>
+      <li><a href="https://github.com/factlet-ai">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <span class="badge"><span class="dot">●</span> Tier 1 — methodology + raw runs</span>
+
+    <h1>Open eval suite<br>for the <span class="accent">Factlet Protocol</span>.</h1>
+
+    <p class="lede">A reproducible benchmark harness that compares LLM behavior with and without a factbook in context, across Claude, GPT, and Gemini. Pre-registered. MIT-licensed. Raw data published.</p>
+
+    <div class="cta-row">
+      <a href="https://github.com/factlet-ai/evals" class="cta primary">Repo on GitHub</a>
+      <a href="https://github.com/factlet-ai/evals/blob/main/docs/RESULTS-N6-MAY-2026.md" class="cta">Results writeup (N=6)</a>
+      <a href="https://github.com/factlet-ai/evals/blob/main/CONTRIBUTING.md" class="cta">Contribute a task</a>
+    </div>
+
+    <h2>What's measured</h2>
+    <p>Three conditions × three frontier models × hand-crafted developer tasks across payments, frontend, and ML pipeline domains. Each response is scored by three judges across five metrics — citation correctness, contradiction count, coverage honesty, quality (1–5), and risk-of-shipping. Inter-judge agreement is reported per metric so readers can discount low-confidence signals.</p>
+
+    <h2>What we found at N=6 (with limits)</h2>
+    <p>Across Claude Sonnet 4.6, GPT-4.1, and Gemini 2.0 Flash on six hand-crafted developer tasks: providing the model with a team-specific factbook (in any reasonable format) reduced harmful shipping recommendations from 61% of cells to 14%, and high-risk shipping recommendations from 61% to 3%. Median quality went from 2.7 to 4.1 on a 1–5 scale. The direction holds when the consensus is recomputed excluding the same-family Claude judge — deltas survive within 0.06 points.</p>
+    <p>The finding that hurts our marketing: <strong>structured per-vendor rendering did not beat naive markdown grounding on outcome metrics.</strong> The protocol's value is in <em>what</em> the factbook contains and how it gets generated, not how it gets formatted into the prompt. We're publishing this because pre-registration only matters if you publish unfavorable findings too.</p>
+
+    <h2>What's NOT supported by this run</h2>
+    <ul class="primitives">
+      <li><strong>A single-number marketing headline.</strong><p>N=6 with a single task author can't carry a "X% better" claim. Tier 2 (~N=100, externally-authored, vanilla-RAG and vendor-Memory comparators) is what we'd publish a real headline on.</p></li>
+      <li><strong>Statistical significance.</strong><p>Wilson 95% CI on a binary outcome at N=18 cells is roughly ±25pp. Direction-of-effect signals are visible; magnitudes aren't pinned.</p></li>
+      <li><strong>Per-vendor leaderboards.</strong><p>We tested grounding behavior, not which model is best. Different question.</p></li>
+    </ul>
+
+    <h2>Pre-registration</h2>
+    <p>The task set, judge prompts, scoring rubric, and analysis plan are pre-registered before runs in <a href="https://github.com/factlet-ai/evals/blob/main/tier1/PREREG.md"><code>tier1/PREREG.md</code></a>. Hashes use <code>git ls-tree</code> for filesystem-/locale-independent reproducibility. Stopping rules ("no peeking, no early stopping, no rubric iteration in response to numbers") are committed in writing.</p>
+
+    <h2>Contributing tasks (the highest-leverage thing you can do)</h2>
+    <p>Every task in the current scaffold is authored by the protocol author — that's a real construct-validity hole and we won't run a bigger eval until ≥5 externally-authored tasks land. Domains we especially want: <strong>security</strong> (auth, IAM, secret handling), <strong>devops</strong> (Terraform, Kubernetes, CI policy), <strong>data engineering</strong> (schema, pipeline conventions). The full quality bar — and why we reject tasks where general LLM knowledge already aligns with team policy — lives in <a href="https://github.com/factlet-ai/evals/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+
+    <h2>Reproducing</h2>
+    <p>Clone the repo, install the runner (~400 lines of Python), set your API keys, run. ~$2.50 and ~50 minutes for the full pipeline at the current scaffold size.</p>
+    <pre><code>git clone https://github.com/factlet-ai/evals
+cd evals/runner &amp;&amp; pip install -e .
+export ANTHROPIC_API_KEY=… OPENAI_API_KEY=… GOOGLE_API_KEY=…
+python validate.py --tasks ../tier1/tasks --factbooks ../tier1/factbooks
+python run.py --tasks ../tier1/tasks --factbooks ../tier1/factbooks \
+              --output ../results/$(date +%Y-%m-%d)</code></pre>
+  </main>
+
+  <footer>
+    <p>Factlet Protocol · MIT licensed · <a href="https://github.com/factlet-ai">github.com/factlet-ai</a></p>
+  </footer>
+</body>
+</html>
